@@ -1,7 +1,7 @@
 const app = function () {
-	const API_BASE = 'https://script.google.com/macros/s/AKfycbyP5Rifn7Q05Qcd7CTfm-AOouFHHvUAvCVVuKSfQu-LCqJocP8/exec';
-	const API_KEY = 'abcdef';
-	const CATEGORIES = ['general', 'financial', 'technology', 'marketing'];
+	const API_BASE = 'https://script.google.com/macros/s/AKfycbzfcFWq9-9MZmDeZKdFa0dEg9a7JEV0PJ-NR7xboZtRRtr9FUM/exec';
+	const API_KEY = 'eventosfusca';
+	//const CATEGORIES = ['general', 'financial', 'technology', 'marketing'];
 
 	const state = {activePage: 1, activeCategory: null};
 	const page = {};
@@ -31,19 +31,20 @@ const app = function () {
 				}
 
 				_renderPosts(json.data);
-				_renderPostsPagination(json.pages);
+				//_renderPostsPagination(json.pages);
 			})
 			.catch((error) => {
 				_setNotice('Unexpected error loading posts');
+				alert(error);
 			})
 	}
 
 	function _buildFilter () {
 	    page.filter.appendChild(_buildFilterLink('no filter', true));
 
-	    CATEGORIES.forEach(function (category) {
-	    	page.filter.appendChild(_buildFilterLink(category, false));
-	    });
+	    //CATEGORIES.forEach(function (category) {
+	    	//page.filter.appendChild(_buildFilterLink(category, false));
+	    //});
 	}
 
 	function _buildFilterLink (label, isSelected) {
@@ -64,9 +65,9 @@ const app = function () {
 	function _buildApiUrl (page, category) {
 		let url = API_BASE;
 		url += '?key=' + API_KEY;
-		url += '&page=' + page;
-		url += category !== null ? '&category=' + category : '';
-
+		//url += '&page=' + page;
+		//url += category !== null ? '&category=' + category : '';
+		//alert(url);
 		return url;
 	}
 
@@ -78,18 +79,18 @@ const app = function () {
 		posts.forEach(function (post) {
 			const article = document.createElement('article');
 			article.innerHTML = `
-				<h2>${post.title}</h2>
+				<h2>${post}</h2>
 				<div class="article-details">
 					<div>By ${post.author} on ${_formatDate(post.timestamp)}</div>
 					<div>Posted in ${post.category}</div>
 				</div>
-				${_formatContent(post.content)}
+				
 			`;
 			page.container.appendChild(article);
 		});
 	}
 
-	function _renderPostsPagination (pages) {
+	/*function _renderPostsPagination (pages) {
 		if (pages.next) {
 			const link = document.createElement('button');
 			link.innerHTML = 'Load more posts';
@@ -103,18 +104,18 @@ const app = function () {
 		} else {
 			_setNotice('No more posts to display');
 		}
-	}
+	}*/
 
 	function _formatDate (string) {
 		return new Date(string).toLocaleDateString('en-GB');
 	}
 
-	function _formatContent (string) {
+	/*function _formatContent (string) {
 		return string.split('\n')
 			.filter((str) => str !== '')
 			.map((str) => `<p>${str}</p>`)
 			.join('');
-	}
+	}*/
 
 	function _capitalize (label) {
 		return label.slice(0, 1).toUpperCase() + label.slice(1).toLowerCase();
