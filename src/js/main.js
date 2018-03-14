@@ -79,7 +79,7 @@ const app = function () {
 		posts.forEach(function (post) {
 			const article = document.createElement('article');
 			article.innerHTML = `
-				${post.nome} - ${post.inicio} - ${post.fim}				
+				Evento: ${post.nome} - Inicio: ${post.inicio} - Fim: ${post.fim}				
 			`;
 			page.container.appendChild(article);
 		});
