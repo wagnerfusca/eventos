@@ -16,12 +16,26 @@ const app = function () {
 	}
 
 	function _getNewPosts () {
-		page.container.innerHTML = '';
-		_getPosts();
+		const container = document.createElement('container');
+		container.innerHTML = `<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">Nome</th>
+      <th scope="col">Inicio</th>
+      <th scope="col">Fim</th>
+      <th scope="col">Categoria</th>
+    </tr>
+  </thead>
+  <tbody>
+`   ;
+	page.container.appendChild(container);
+	_getPosts();
+	page.container.innerHTML = `</tbody></table>`	;
+	page.container.appendChild(container);
 	}
 
 	function _getPosts () {
-		_setNotice('Loading posts');
+		//_setNotice('Loading posts');
 
 		fetch(_buildApiUrl(state.activePage, state.activeCategory))
 			.then((response) => response.json())
@@ -76,12 +90,20 @@ const app = function () {
 	}
 
 	function _renderPosts (posts) {
+		const tabela = document.createElement('tr');
 		posts.forEach(function (post) {
-			const article = document.createElement('article');
-			article.innerHTML = `
-				Evento: ${post.nome} - Inicio: ${post.inicio} - Fim: ${post.fim}				
+			tabela.innerHTML = `
+				<tr>
+				<th scope="row"> ${post.nome} </th>
+      <td> ${post.inicio} </td>
+      <td> ${post.fim} </td>
+      <td>${post.categoria} </td>
+					
+			</tr>
 			`;
-			page.container.appendChild(article);
+			
+			//page.container.innerHTML =tabela;
+			page.container.appendChild(tabela);
 		});
 	}
 
