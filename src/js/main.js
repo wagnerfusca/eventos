@@ -1,51 +1,54 @@
 const app = function () {
 	const API_BASE = 'https://script.google.com/macros/s/AKfycbzfcFWq9-9MZmDeZKdFa0dEg9a7JEV0PJ-NR7xboZtRRtr9FUM/exec';
 	const API_KEY = 'eventosfusca';
-	//const CATEGORIES = ['general', 'financial', 'technology', 'marketing'];
+	const CATEGORIES = ['Agilidade', 'Blockchain', 'CIO/Executivos', 'Cloud', 'Desenvolvimento', 'e-Comerce', 'Geral', 'IA/Inteligência Cognitiva', 'Inovação', 'IOT', 'Lean', 'Liderança', 'PMI/PMP', 'Produtos', 'RH', 'Robótica', 'Segurança', 'UX/CX/PX'];
 
 	const state = {activePage: 1, activeCategory: null};
 	const page = {};
-
 	function init () {
 		page.notice = document.getElementById('notice');
 		page.filter = document.getElementById('filter');
 		page.container = document.getElementById('container');
 
-		_buildFilter();
-		_getNewPosts();
+		//_buildFilter();
+		_getEvents();
 	}
 
-	function _getNewPosts () {
-		const container = document.createElement('container');
-		container.innerHTML = `<table class="table">
-  <thead>
-    <tr>
-      <th scope="col">Nome</th>
-      <th scope="col">Inicio</th>
-      <th scope="col">Fim</th>
-      <th scope="col">Categoria</th>
-    </tr>
-  </thead>
-  <tbody>
-`   ;
-	page.container.appendChild(container);
-	_getPosts();
-	page.container.innerHTML = `</tbody></table>`	;
-	page.container.appendChild(container);
+	function _getEvents () {
+		const novaTabela = document.createElement('div');
+		novaTabela.innerHTML = `
+			<table class="table" id="tabela">
+			  <thead>
+				<tr>
+				  <th scope="col">Nome</th>
+				  <th scope="col">Categoria</th>
+				  <th scope="col">UF ou Pais</th>
+				  <th scope="col">Cidade</th>
+				  <th scope="col">Mes/ano</th>
+				  <th scope="col">Data Inicio</th>
+				  <th scope="col">Data Fim</th>
+				  <th scope="col">Call4Papers</th>
+				  <th scope="col">Site</th>
+				</tr>
+			  </thead>
+			  <tbody>
+			`   ;
+				
+		page.container.appendChild(novaTabela);
+		_getJson();
+		novaTabela.innerHtml = '</tbody></table>';
+		page.container.appendChild(novaTabela);
 	}
 
-	function _getPosts () {
-		//_setNotice('Loading posts');
-
-		fetch(_buildApiUrl(state.activePage, state.activeCategory))
+	function _getJson () {
+			fetch(_buildApiUrl(state.activePage, state.activeCategory))
 			.then((response) => response.json())
 			.then((json) => {
 				if (json.status !== 'success') {
 					_setNotice(json.message);
 				}
 
-				_renderPosts(json.data);
-				//_renderPostsPagination(json.pages);
+				_renderEvents(json.data);
 			})
 			.catch((error) => {
 				_setNotice('Unexpected error loading posts');
@@ -68,9 +71,8 @@ const app = function () {
 	  	link.onclick = function (event) {
 	  		let category = label === 'no filter' ? null : label.toLowerCase();
 
-			_resetActivePage();
-	  		_setActiveCategory(category);
-	  		_getNewPosts();
+			_setActiveCategory(category);
+	  		//_getNewEvents();
 	  	};
 
 	  	return link;
@@ -89,63 +91,58 @@ const app = function () {
 		page.notice.innerHTML = label;
 	}
 
-	function _renderPosts (posts) {
-		const tabela = document.createElement('tr');
+	function _renderEvents (posts) {
 		posts.forEach(function (post) {
-			tabela.innerHTML = `
-				<tr>
-				<th scope="row"> ${post.nome} </th>
-      <td> ${post.inicio} </td>
-      <td> ${post.fim} </td>
-      <td>${post.categoria} </td>
-					
-			</tr>
-			`;
-			
-			//page.container.innerHTML =tabela;
-			page.container.appendChild(tabela);
+			const linha = document.createElement('tr');
+			linha.innerHTML = `
+				  <th scope="row"> ${post.nome} </th>
+				  <td> ${post.categoria} </td>
+				  <td> ${post.uf} </td>
+				  <td> ${post.local} </td>
+				  <td> ${_formatDateMMYYYY(post.mesano)} </td>
+				  <td> ${_formatDateDDMMYYYY(post.inicio)} </td>
+				  <td> ${_formatDateDDMMYYYY(post.fim)} </td>
+				  <td> ${_formatString(post.call4papers)} </td>
+				  <td> <a href="${post.site}" target="_blank">${_formatString(post.site)}</a> </td>
+				  	
+			`;	
+			document.getElementById('tabela').appendChild(linha);
 		});
 	}
 
-	/*function _renderPostsPagination (pages) {
-		if (pages.next) {
-			const link = document.createElement('button');
-			link.innerHTML = 'Load more posts';
-			link.onclick = function (event) {
-				_incrementActivePage();
-				_getPosts();
-			};
-
-			page.notice.innerHTML = '';
-			page.notice.appendChild(link);
-		} else {
-			_setNotice('No more posts to display');
+	function _formatString (string) {
+		if(string == ''){
+			return '';
 		}
-	}*/
-
-	function _formatDate (string) {
-		return new Date(string).toLocaleDateString('en-GB');
+		return string;
+	}
+	function _formatLink (string) {
+		if(string == ''){
+			return '';
+		}
+		return 'Acesse o site';
 	}
 
-	/*function _formatContent (string) {
-		return string.split('\n')
-			.filter((str) => str !== '')
-			.map((str) => `<p>${str}</p>`)
-			.join('');
-	}*/
+	function _formatDateMMYYYY (string) {
+		if(string == ''){
+			return '';
+		}
+		var options = { year: 'numeric', month: 'numeric' };
+		return new Date(string).toLocaleDateString('en-GB', options);
+	}
+
+	function _formatDateDDMMYYYY (string) {
+		if(string == ''){
+			return '';
+		}
+		return new Date(string).toLocaleDateString('en-GB');
+	}
 
 	function _capitalize (label) {
 		return label.slice(0, 1).toUpperCase() + label.slice(1).toLowerCase();
 	}
 
-	function _resetActivePage () {
-		state.activePage = 1;
-	}
-
-	function _incrementActivePage () {
-		state.activePage += 1;
-	}
-
+	
 	function _setActiveCategory (category) {
 		state.activeCategory = category;
 		
