@@ -1,7 +1,9 @@
 const app = function () {
 	const API_BASE = 'https://script.google.com/macros/s/AKfycbzfcFWq9-9MZmDeZKdFa0dEg9a7JEV0PJ-NR7xboZtRRtr9FUM/exec';
 	const API_KEY = 'eventosfusca';
-	const CATEGORIES = ['Agilidade', 'Blockchain', 'CIO/Executivos', 'Cloud', 'Desenvolvimento', 'e-Comerce', 'Geral', 'IA/Inteligência Cognitiva', 'Inovação', 'IOT', 'Lean', 'Liderança', 'PMI/PMP', 'Produtos', 'RH', 'Robótica', 'Segurança', 'UX/CX/PX'];
+	const CATEGORIES = ['Agilidade', 'Blockchain', 'CIO/Executivos', 'Cloud', 'Desenvolvimento', 'Ecommerce', 'Geral', 'IA-Inteligencia_Cognitiva', 'Inovacao', 'IOT', 'Lean', 'Lideranca', 'PMI-PMP', 'Produtos', 'RH', 'Robotica', 'Seguranca', 'UX-CX-PX'];
+	
+	const MONTHS = ['01/2018','02/2018','03/2018','04/2018','05/2018','06/2018','07/2018','08/2018','09/2018','10/2018','11/2018','12/2018',];
 
 	const state = {activePage: 1, activeCategory: null};
 	const page = {};
@@ -10,11 +12,12 @@ const app = function () {
 		page.filter = document.getElementById('filter');
 		page.container = document.getElementById('container');
 
-		//_buildFilter();
+		_buildFilter();
 		_getEvents();
 	}
 
 	function _getEvents () {
+		page.container.innerHTML = '';
 		const novaTabela = document.createElement('div');
 		novaTabela.innerHTML = `
 			<table class="table" id="tabela">
@@ -57,9 +60,14 @@ const app = function () {
 	}
 
 	function _buildFilter () {
-	    page.filter.appendChild(_buildFilterLink('no filter', true));
 
-	    //CATEGORIES.forEach(function (category) {
+	    page.filter.appendChild(_buildFilterLink('no filter', true));
+		
+	    CATEGORIES.forEach(function (category) {
+	    	page.filter.appendChild(_buildFilterLink(category, false));
+	    });
+		
+		//MONTHS.forEach(function (category) {
 	    	//page.filter.appendChild(_buildFilterLink(category, false));
 	    //});
 	}
@@ -71,8 +79,9 @@ const app = function () {
 	  	link.onclick = function (event) {
 	  		let category = label === 'no filter' ? null : label.toLowerCase();
 
+			
 			_setActiveCategory(category);
-	  		//_getNewEvents();
+			_getEvents();
 	  	};
 
 	  	return link;
@@ -81,9 +90,8 @@ const app = function () {
 	function _buildApiUrl (page, category) {
 		let url = API_BASE;
 		url += '?key=' + API_KEY;
-		//url += '&page=' + page;
-		//url += category !== null ? '&category=' + category : '';
-		//alert(url);
+		url += category !== null ? '&category=' + category : '';
+		console.log(url);
 		return url;
 	}
 
