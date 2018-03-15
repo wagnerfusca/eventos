@@ -61,7 +61,7 @@ const app = function () {
 
 	function _buildFilter () {
 
-	    page.filter.appendChild(_buildFilterLink('no filter', true));
+	    page.filter.appendChild(_buildFilterLink('Sem Filtro', true));
 		
 	    CATEGORIES.forEach(function (category) {
 	    	page.filter.appendChild(_buildFilterLink(category, false));
@@ -77,7 +77,7 @@ const app = function () {
 	  	link.innerHTML = _capitalize(label);
 	  	link.classList = isSelected ? 'selected' : '';
 	  	link.onclick = function (event) {
-	  		let category = label === 'no filter' ? null : label.toLowerCase();
+	  		let category = label === 'Sem Filtro' ? null : label.toLowerCase();
 
 			
 			_setActiveCategory(category);
@@ -154,7 +154,7 @@ const app = function () {
 	function _setActiveCategory (category) {
 		state.activeCategory = category;
 		
-		const label = category === null ? 'no filter' : category;
+		const label = category === null ? 'Sem Filtro' : category;
 		Array.from(page.filter.children).forEach(function (element) {
   			element.classList = label === element.innerHTML.toLowerCase() ? 'selected' : '';
   		});
