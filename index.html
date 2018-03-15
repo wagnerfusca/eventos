@@ -8,12 +8,48 @@
 </head>
 <body>
 	<div class="container-fluid"> 
-			
+	<div class="header clearfix">
+        <nav>
+          <ul class="nav nav-pills float-right">
+            <li class="nav-item">
+              <a class="nav-link" href="https://medium.com/@wagnerfusca">
+				<img alt="Visite meu blog" src="medium.png" />
+			  </a>
+            </li>
+          </ul>
+		  <ul class="nav nav-pills float-right">
+            <li class="nav-item">
+              <a class="nav-link" href="https://www.twitter.com/tiofusca">
+				<img alt="Me adicione no Twitter" src="twitter.png" />
+			  </a>
+            </li>
+          </ul>
+		  <ul class="nav nav-pills float-right">
+            <li class="nav-item">
+              <a class="nav-link" href="https://www.linkedin.com/in/wagnerfusca/">
+				<img alt="Me adicione no Linkedin" src="linkedin.png" />
+			  </a>
+            </li>
+          </ul>
+		  <ul class="nav nav-pills float-right">
+            <li class="nav-item">
+       
+				<a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/">
+				<img alt="Licença Creative Commons" style="border-width:0" 
+				src="https://i.creativecommons.org/l/by-nc/4.0/80x15.png" /></a><br />
+				
+        </li>
+          </ul>
+		</nav>
+        <h3 class="text-muted">Calendário de eventos</h3>
+      </div>
 		<nav id="filter"></nav>
 		<div id="container"></div>
 		<div id="notice"></div>
-	<footer>
+	<footer  class="footer">
 		<a href="https://medium.com/p/c2eab3fb0b2b">Inspirado neste post</a>
+		<br/>
+		Este trabalho está licenciado com uma Licença <a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/">Creative Commons - Atribuição-NãoComercial 4.0 Internacional</a>.
 	</footer>
 	</div>
 	<script src="main.js"></script>
@@ -22,5 +58,14 @@
 	<script>
 		document.addEventListener('DOMContentLoaded', app.init);
 	</script>
+	<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-115849972-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-115849972-1');
+</script>
 </body>
 </html>
