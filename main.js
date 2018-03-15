@@ -111,7 +111,7 @@ const app = function () {
 				  <td> ${_formatDateDDMMYYYY(post.inicio)} </td>
 				  <td> ${_formatDateDDMMYYYY(post.fim)} </td>
 				  <td> ${_formatString(post.call4papers)} </td>
-				  <td> <a href="${post.site}" target="_blank">${_formatString(post.site)}</a> </td>
+				  <td> <a href="${post.site}" target="_blank">${_formatLink(post.site)}</a> </td>
 				  	
 			`;	
 			document.getElementById('tabela').appendChild(linha);
