@@ -1,6 +1,6 @@
 # Calendário de eventos
 
-No final de 2017, mapeiei alguns eventos que gostaria de participar em 2018. Inicialmente deixei eles no meu Google Calendar. A medida que a quantidade de eventos aumentava, eu percebia que estava me perdendo na organização. Por isto trasportei os eventos para uma planilha no Google Docs e depois compartilhei com o pessoal do DevParaná e do agilidade.org. Ambos contribuiram e ajudaram a chegar no resultado abaixo:
+No final de 2017, mapeei alguns eventos que gostaria de participar em 2018. Inicialmente deixei eles no meu Google Calendar. A medida que a quantidade de eventos aumentava, eu percebia que estava me perdendo na organização. Por isto transportei os eventos para uma planilha no Google Docs e depois compartilhei com o pessoal do [DevParaná](https://devparana.slack.com/) e do [Agilidade.org](https://agilidade.slack.com/). Ambos contribuíram e ajudaram a chegar no resultado abaixo:
 
 https://wagnerfusca.github.io/eventos/
 
@@ -19,7 +19,7 @@ Aproximadamente 48h após o cadastro.
 
 
 ## Posso contribuir ou ajudar em algo?
-Sim. Pull Requests são muito bem vindos!!!
+Sim. Pull Requests são muito bem-vindos!!!
 
 Confira as necessidades iniciais mapeadas em [Issues](https://github.com/wagnerfusca/eventos/issues)
 
@@ -31,8 +31,5 @@ Confira as necessidades iniciais mapeadas em [Issues](https://github.com/wagnerf
 * [Agilidade.org](https://agilidade.slack.com/)
 * [DevParaná](https://devparana.slack.com/)
 
-
-
-
 ## License
-This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details
+This project is licensed under the GNU General Public License v3.0 - see the [LICENSE.md](LICENSE.md) file for details
