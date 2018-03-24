@@ -3,9 +3,8 @@ const app = function () {
 	const API_KEY = 'eventosfusca';
 	const CATEGORIES = ['Agilidade', 'Blockchain', 'CIO/Executivos', 'Cloud', 'Desenvolvimento', 'Ecommerce', 'Geral', 'IA-Inteligencia_Cognitiva', 'Inovacao', 'IOT', 'Lean', 'Lideranca', 'PMI-PMP', 'Produtos', 'RH', 'Robotica', 'Seguranca', 'UX-CX-PX'];
 	
-	const MONTHS = ['01/2018','02/2018','03/2018','04/2018','05/2018','06/2018','07/2018','08/2018','09/2018','10/2018','11/2018','12/2018',];
 
-	const state = {activePage: 1, activeCategory: null};
+	const state = {activeCategory: null};
 	const page = {};
 	function init () {
 		page.notice = document.getElementById('notice');
@@ -44,7 +43,7 @@ const app = function () {
 	}
 
 	function _getJson () {
-			fetch(_buildApiUrl(state.activePage, state.activeCategory))
+			fetch(_buildApiUrl(state.activeCategory))
 			.then((response) => response.json())
 			.then((json) => {
 				if (json.status !== 'success') {
@@ -66,10 +65,6 @@ const app = function () {
 	    CATEGORIES.forEach(function (category) {
 	    	page.filter.appendChild(_buildFilterLink(category, false));
 	    });
-		
-		//MONTHS.forEach(function (category) {
-	    	//page.filter.appendChild(_buildFilterLink(category, false));
-	    //});
 	}
 
 	function _buildFilterLink (label, isSelected) {
@@ -79,7 +74,6 @@ const app = function () {
 	  	link.onclick = function (event) {
 	  		let category = label === 'Sem Filtro' ? null : label.toLowerCase();
 
-			
 			_setActiveCategory(category);
 			_getEvents();
 	  	};
@@ -87,11 +81,10 @@ const app = function () {
 	  	return link;
 	}
 
-	function _buildApiUrl (page, category) {
+	function _buildApiUrl (category) {
 		let url = API_BASE;
 		url += '?key=' + API_KEY;
 		url += category !== null ? '&category=' + category : '';
-		console.log(url);
 		return url;
 	}
 
