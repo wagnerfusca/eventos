@@ -19,7 +19,7 @@ const app = function () {
 		page.container.innerHTML = '';
 		const novaTabela = document.createElement('div');
 		novaTabela.innerHTML = `
-			<table class="table" id="tabela">
+			<table class="table table-striped" id="tabela">
 			  <thead>
 				<tr>
 				  <th scope="col">Nome</th>
