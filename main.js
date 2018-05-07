@@ -10,11 +10,14 @@ const app = function () {
 		page.notice = document.getElementById('notice');
 		page.filter = document.getElementById('filter');
 		page.container = document.getElementById('container');
-
+		page.atualizado = document.getElementById('atualizado');
 		_buildFilter();
 		_getEvents();
 	}
 
+	function _setDataAtualizacao(cabecalho) {
+		page.atualizado.innerHTML = 'Atualizado em: ' + cabecalho[12];
+	}
 	function _getEvents () {
 		page.container.innerHTML = '';
 		const novaTabela = document.createElement('div');
@@ -49,7 +52,7 @@ const app = function () {
 				if (json.status !== 'success') {
 					_setNotice(json.message);
 				}
-
+				_setDataAtualizacao(json.cabecalho)
 				_renderEvents(json.data);
 			})
 			.catch((error) => {
