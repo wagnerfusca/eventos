@@ -16,7 +16,7 @@ const app = function () {
 	}
 
 	function _setDataAtualizacao(cabecalho) {
-		page.atualizado.innerHTML = 'Atualizado em: ' + cabecalho[12];
+		page.atualizado.innerHTML = 'Atualizado em: ' + cabecalho[13];
 	}
 	function _getEvents () {
 		page.container.innerHTML = '';
