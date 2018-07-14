@@ -10,13 +10,13 @@ const app = function () {
 		page.notice = document.getElementById('notice');
 		page.filter = document.getElementById('filter');
 		page.container = document.getElementById('container');
-		page.atualizado = document.getElementById('atualizado');
+		page.alert = document.getElementById('alert');
 		_buildFilter();
 		_getEvents();
 	}
 
 	function _setDataAtualizacao(cabecalho) {
-		page.atualizado.innerHTML = 'Atualizado em: ' + cabecalho[13];
+		page.alert.innerHTML = '<div class="alert alert-info" role="alert"> Atualizado em: <b>'+cabecalho[13]+'</b></div>';
 	}
 	function _getEvents () {
 		page.container.innerHTML = '';
@@ -36,13 +36,13 @@ const app = function () {
 				  <th scope="col">Site</th>
 				</tr>
 			  </thead>
-			  <tbody>
+			  <tbody id="table-body">
+			  </tbody>
+			</table>
 			`   ;
 				
 		page.container.appendChild(novaTabela);
 		_getJson();
-		novaTabela.innerHtml = '</tbody></table>';
-		page.container.appendChild(novaTabela);
 	}
 
 	function _getJson () {
@@ -73,7 +73,7 @@ const app = function () {
 	function _buildFilterLink (label, isSelected) {
 		const link = document.createElement('button');
 	  	link.innerHTML = _capitalize(label);
-	  	link.classList = isSelected ? 'selected' : '';
+	  	link.classList = isSelected ? 'selected btn btn-primary hidden-xs' : 'btn btn-outline-primary hidden-xs';
 	  	link.onclick = function (event) {
 	  		let category = label === 'Sem Filtro' ? null : label.toLowerCase();
 
@@ -110,7 +110,7 @@ const app = function () {
 				  <td> <a href="${post.site}" target="_blank">${_formatLink(post.site)}</a> </td>
 				  	
 			`;	
-			document.getElementById('tabela').appendChild(linha);
+			document.getElementById('table-body').appendChild(linha);
 		});
 	}
 
@@ -152,7 +152,7 @@ const app = function () {
 		
 		const label = category === null ? 'Sem Filtro' : category;
 		Array.from(page.filter.children).forEach(function (element) {
-  			element.classList = label === element.innerHTML.toLowerCase() ? 'selected' : '';
+  			element.classList = label === element.innerHTML.toLowerCase() ? 'selected btn btn-primary hidden-xs' : 'btn btn-outline-primary hidden-xs';
   		});
 	}
 
