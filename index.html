@@ -7,61 +7,56 @@
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 </head>
 <body>
+	<nav class="navbar navbar-expand-lg navbar-dark bg-dark justify-content-end">
+		<a class="navbar-brand" href="#"><span style="font-size: 26px">Calendário de eventos</span></a>
+		<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+			<span class="navbar-toggler-icon"></span>
+		</button>
+		<div class="collapse navbar-collapse" id="navbarNavDropdown">
+			<ul class="navbar-nav ml-auto nav-pills">
+				<li class="nav-item">
+					<a class="nav-link" href="https://medium.com/@wagnerfusca">
+						<img alt="Visite meu blog" width="35" src="medium.png" />
+					</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" href="https://www.twitter.com/tiofusca">
+						<img alt="Me adicione no Twitter" width="35" src="twitter.png" />
+					</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" href="https://www.linkedin.com/in/wagnerfusca/">
+						<img alt="Me adicione no Linkedin" width="35" src="linkedin.png" />
+					</a>
+				</li>
+				<li class="nav-item">
+					<a class="" href="https://goo.gl/forms/BPnZSeiojuQA0SYI3">
+						<button type="button" class="btn btn-outline-light btn-lg">Cadastre aqui o seu evento!</button>
+					</a>
+				</li>	
+			</ul>
+		</div>
+	</nav>
+	<div id="alert"></div>
 	<div class="container-fluid"> 
 		<div class="row">
-			<div class="col">
-				<h3 class="text-muted">Calendário de eventos</h3>
-			</div>
-			<div class="col">
-				<div id="atualizado"></div>
-			</div>
-			<div class="col">
-				<a rel="license" href="https://goo.gl/forms/BPnZSeiojuQA0SYI3">
-					<button type="button" class="btn btn-success">Cadastre aqui o seu evento!</button>
-				</a>
-			</div>
-			<div class="col">  
-			  <ul class="nav nav-pills float-right">
-				  <a class="nav-link" href="https://medium.com/@wagnerfusca">
-					<img alt="Visite meu blog" src="medium.png" />
-				  </a>
-			  </ul>
-			  <ul class="nav nav-pills float-right">
-				  <a class="nav-link" href="https://www.twitter.com/tiofusca">
-					<img alt="Me adicione no Twitter" src="twitter.png" />
-				  </a>
-			  </ul>
-			  <ul class="nav nav-pills float-right">
-				  <a class="nav-link" href="https://www.linkedin.com/in/wagnerfusca/">
-					<img alt="Me adicione no Linkedin" src="linkedin.png" />
-				  </a>
-			  </ul>
-			  <ul class="nav nav-pills float-right">
-			  
-					<a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/">
-					<img alt="Licença Creative Commons" style="border-width:0" 
-					src="https://i.creativecommons.org/l/by-nc/4.0/80x15.png" /></a><br />
-				</ul>
-			  
-			</div>			
-		  </div>
-		<div class="row">
-			<nav id="filter"></nav>
+			<div id="filter" class="btn-group btn-group-sm" role="group" style="display: inline; padding:15px;margin-bottom: 1rem;"></div>
 		</div>
 		<div class="row">
-			<div id="container"></div>
+			<div id="container" style="width: 100%"></div>
 		</div>
 		<div class="row">
 			<div id="notice"></div>
 		</div>
-		<div class="row">
-			<footer  class="footer">
-				<a href="https://medium.com/p/c2eab3fb0b2b">Inspirado neste post</a>
-				<br/>
-				Este trabalho está licenciado com uma Licença <a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/">Creative Commons - Atribuição-NãoComercial 4.0 Internacional</a>.
-			</footer>
-		</div>
 	</div>
+	<footer class="footer text-center">
+		<a href="https://medium.com/p/c2eab3fb0b2b">Inspirado neste post</a>
+		<br/>
+		Este trabalho está licenciado com uma Licença <a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/">Creative Commons - Atribuição-NãoComercial 4.0 Internacional</a>.
+		<a class="" rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/">
+			<img alt="Licença Creative Commons" style="border-width:0" src="https://i.creativecommons.org/l/by-nc/4.0/80x15.png">
+	</a>
+	</footer>	
 	<script src="main.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 

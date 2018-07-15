@@ -1,8 +1,7 @@
 const app = function () {
 	const API_BASE = 'https://script.google.com/macros/s/AKfycbzfcFWq9-9MZmDeZKdFa0dEg9a7JEV0PJ-NR7xboZtRRtr9FUM/exec';
 	const API_KEY = 'eventosfusca';
-	const CATEGORIES = ['Agilidade', 'Blockchain', 'CIO/Executivos', 'Cloud', 'Desenvolvimento', 'Ecommerce', 'Geral', 'IA-Inteligencia_Cognitiva', 'Inovacao', 'IOT', 'Lean', 'Lideranca', 'PMI-PMP', 'Produtos', 'RH', 'Robotica', 'Seguranca', 'UX-CX-PX'];
-	
+	const CATEGORIES = {'Sem Filtro':'Sem Filtro','Agilidade': 'Agilindade', 'Blockchain': 'Blockchain', 'CIO/Executivos': 'CIO/Executivos', 'Cloud': 'Cloud', 'Desenvolvimento':'Desenvolvimento', 'Ecommerce':'Ecommerce', 'Geral':'Geral', 'IA-Inteligencia_Cognitiva': 'IA e Inteligência Cognitiva', 'Inovacao': 'Inovação', 'IOT':'IOT', 'Lean':'Lean', 'Lideranca':'Liderança', 'PMI-PMP':'PMI e PMP', 'Produtos': 'Produtos', 'RH': 'RH', 'Robotica':'Robótica', 'Seguranca':'Segurança', 'UX-CX-PX':'UX, CX e PX'};
 
 	const state = {activeCategory: null};
 	const page = {};
@@ -10,13 +9,13 @@ const app = function () {
 		page.notice = document.getElementById('notice');
 		page.filter = document.getElementById('filter');
 		page.container = document.getElementById('container');
-		page.atualizado = document.getElementById('atualizado');
+		page.alert = document.getElementById('alert');
 		_buildFilter();
 		_getEvents();
 	}
 
 	function _setDataAtualizacao(cabecalho) {
-		page.atualizado.innerHTML = 'Atualizado em: ' + cabecalho[13];
+		page.alert.innerHTML = '<div class="alert alert-info" role="alert"> Atualizado em: <b>'+cabecalho[13]+'</b></div>';
 	}
 	function _getEvents () {
 		page.container.innerHTML = '';
@@ -36,13 +35,13 @@ const app = function () {
 				  <th scope="col">Site</th>
 				</tr>
 			  </thead>
-			  <tbody>
+			  <tbody id="table-body">
+			  </tbody>
+			</table>
 			`   ;
 				
 		page.container.appendChild(novaTabela);
 		_getJson();
-		novaTabela.innerHtml = '</tbody></table>';
-		page.container.appendChild(novaTabela);
 	}
 
 	function _getJson () {
@@ -62,26 +61,23 @@ const app = function () {
 	}
 
 	function _buildFilter () {
-
-	    page.filter.appendChild(_buildFilterLink('Sem Filtro', true));
-		
-	    CATEGORIES.forEach(function (category) {
-	    	page.filter.appendChild(_buildFilterLink(category, false));
-	    });
+		for(var prop in CATEGORIES) {
+			page.filter.appendChild(_buildFilterLink(CATEGORIES[prop], prop, false));
+		}
 	}
 
-	function _buildFilterLink (label, isSelected) {
+	function _buildFilterLink (element, key, isSelected) {
 		const link = document.createElement('button');
-	  	link.innerHTML = _capitalize(label);
-	  	link.classList = isSelected ? 'selected' : '';
-	  	link.onclick = function (event) {
-	  		let category = label === 'Sem Filtro' ? null : label.toLowerCase();
+		  link.innerHTML = _capitalize(element);
+		  link.classList = isSelected ? 'btn btn-primary hidden-xs' : 'btn btn-outline-primary hidden-xs';
+		  link.onclick = function (event) {
+			  let category = key === 'Sem Filtro' ? null : key.toLowerCase();
 
 			_setActiveCategory(category);
 			_getEvents();
-	  	};
+		  };
 
-	  	return link;
+		  return link;
 	}
 
 	function _buildApiUrl (category) {
@@ -108,9 +104,9 @@ const app = function () {
 				  <td> ${_formatDateDDMMYYYY(post.fim)} </td>
 				  <td> ${_formatString(post.call4papers)} </td>
 				  <td> <a href="${post.site}" target="_blank">${_formatLink(post.site)}</a> </td>
-				  	
+					  
 			`;	
-			document.getElementById('tabela').appendChild(linha);
+			document.getElementById('table-body').appendChild(linha);
 		});
 	}
 
@@ -152,11 +148,11 @@ const app = function () {
 		
 		const label = category === null ? 'Sem Filtro' : category;
 		Array.from(page.filter.children).forEach(function (element) {
-  			element.classList = label === element.innerHTML.toLowerCase() ? 'selected' : '';
-  		});
+			  element.classList = label === element.innerHTML.toLowerCase() ? 'btn btn-primary hidden-xs' : 'btn btn-outline-primary hidden-xs';
+		  });
 	}
 
 	return {
 		init: init
- 	};
+	 };
 }();
