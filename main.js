@@ -1,7 +1,7 @@
 const app = function () {
 	const API_BASE = 'https://script.google.com/macros/s/AKfycbzfcFWq9-9MZmDeZKdFa0dEg9a7JEV0PJ-NR7xboZtRRtr9FUM/exec';
 	const API_KEY = 'eventosfusca';
-	const CATEGORIES = {'Sem Filtro':'Sem Filtro','Agilidade': 'Agilindade', 'Blockchain': 'Blockchain', 'CIO/Executivos': 'CIO/Executivos', 'Cloud': 'Cloud', 'Desenvolvimento':'Desenvolvimento', 'Ecommerce':'Ecommerce', 'Geral':'Geral', 'IA-Inteligencia_Cognitiva': 'IA e Inteligência Cognitiva', 'Inovacao': 'Inovação', 'IOT':'IOT', 'Lean':'Lean', 'Lideranca':'Liderança', 'PMI-PMP':'PMI e PMP', 'Produtos': 'Produtos', 'RH': 'RH', 'Robotica':'Robótica', 'Seguranca':'Segurança', 'UX-CX-PX':'UX, CX e PX'};
+	const CATEGORIES = {'Sem Filtro':'Sem Filtro','Agilidade': 'Agilidade', 'Blockchain': 'Blockchain', 'CIO/Executivos': 'CIO/Executivos', 'Cloud': 'Cloud', 'Desenvolvimento':'Desenvolvimento', 'Ecommerce':'Ecommerce', 'Geral':'Geral', 'IA-Inteligencia_Cognitiva': 'IA e Inteligência Cognitiva', 'Inovacao': 'Inovação', 'IOT':'IOT', 'Lean':'Lean', 'Lideranca':'Liderança', 'PMI-PMP':'PMI e PMP', 'Produtos': 'Produtos', 'RH': 'RH', 'Robotica':'Robótica', 'Seguranca':'Segurança', 'UX-CX-PX':'UX, CX e PX'};
 
 	const state = {activeCategory: null};
 	const page = {};
