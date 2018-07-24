@@ -4,51 +4,77 @@
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 	<title>Calendário de Eventos</title>
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+	<link rel="stylesheet" href="https://getbootstrap.com/docs/4.1/dist/css/bootstrap.min.css">
+	<link rel="stylesheet" href="styles.css">
 </head>
 <body>
-	<nav class="navbar navbar-expand-lg navbar-dark bg-dark justify-content-end">
-		<a class="navbar-brand" href="#"><span style="font-size: 26px">Calendário de eventos</span></a>
-		<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
-			<span class="navbar-toggler-icon"></span>
-		</button>
-		<div class="collapse navbar-collapse" id="navbarNavDropdown">
-			<ul class="navbar-nav ml-auto nav-pills">
-				<li class="nav-item">
-					<a class="nav-link" href="https://medium.com/@wagnerfusca">
-						<img alt="Visite meu blog" width="35" src="medium.png" />
-					</a>
-				</li>
-				<li class="nav-item">
-					<a class="nav-link" href="https://www.twitter.com/tiofusca">
-						<img alt="Me adicione no Twitter" width="35" src="twitter.png" />
-					</a>
-				</li>
-				<li class="nav-item">
-					<a class="nav-link" href="https://www.linkedin.com/in/wagnerfusca/">
-						<img alt="Me adicione no Linkedin" width="35" src="linkedin.png" />
-					</a>
-				</li>
-				<li class="nav-item">
-					<a class="" href="https://goo.gl/forms/BPnZSeiojuQA0SYI3">
-						<button type="button" class="btn btn-outline-light btn-lg">Cadastre aqui o seu evento!</button>
-					</a>
-				</li>	
-			</ul>
-		</div>
-	</nav>
-	<div id="alert"></div>
-	<div class="container-fluid"> 
-		<div class="row">
-			<div id="filter" class="btn-group btn-group-sm" role="group" style="display: inline; padding:15px;margin-bottom: 1rem;"></div>
-		</div>
-		<div class="row">
-			<div id="container" style="width: 100%"></div>
-		</div>
-		<div class="row">
-			<div id="notice"></div>
+	<header>
+		<nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+			<a class="navbar-brand" href="#">Calendário de Eventos</a>
+			<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+			<div class="collapse navbar-collapse mr-auto" id="navbarCollapse">
+				<ul class="navbar-nav flex-xs-column ml-md-auto align-items-xs-center">
+					<li class="nav-item d-flex">
+						<a class="nav-link mr-2" href="https://medium.com/@wagnerfusca">
+							<img alt="Visite meu blog" width="35" src="medium.png" />
+						</a>
+						<a class="nav-link mr-2" href="https://www.twitter.com/tiofusca">
+							<img alt="Me adicione no Twitter" width="35" src="twitter.png" />
+						</a>
+						<a class="nav-link" href="https://www.linkedin.com/in/wagnerfusca/">
+							<img alt="Me adicione no Linkedin" width="35" src="linkedin.png" />
+						</a>
+					</li>
+					<li class="nav-item">
+						<a class="" href="https://goo.gl/forms/BPnZSeiojuQA0SYI3">
+							<button type="button" class="btn btn-outline-light btn-lg">Cadastre aqui o seu evento!</button>
+						</a>
+					</li>
+				</ul>
+			</div>
+		</nav>
+	</header>
+	<div class="col-sm-12">
+		<div id="alert" class="mt-2 float-right"></div>
+		<div class="container-fluid"> 
+			<div class="row">
+				<div id="filter" class="btn-group btn-group-sm" role="group" style="display: inline; padding:15px;margin-bottom: 1rem;"></div>
+			</div>
+			<!-- <div class="row">
+				<div id="container" style="width: 100%"></div>
+			</div> -->
+			<div class="row">
+				<div id="notice"></div>
+			</div>
 		</div>
 	</div>
+	<div class="col-sm-12">
+		<button class="btn btn-outline-dark d-sm-none float-right mb-3" type="button" data-toggle="collapse" data-target="#collapseAside" aria-expanded="false" aria-controls="collapseAside">
+		    Filtrar <i class="fa fa-filter"></i>
+	  	</button>
+		<aside class="col-sm-3 float-left mb-4 d-sm-block" id="collapseAside" >
+			<div class="card">
+				<article class="card-group-item">
+					<header class="card-header"><h6 class="title">Categorias</h6></header>
+					<div class="filter-content">
+						<div id="category-list" class="list-group list-group-flush">
+						</div>
+					</div>
+				</article>
+			</div>
+		</aside>
+
+	    <div id="container" class="float-left col-sm-9">
+			<div class="row">
+				<div class="col-xs-12 col-sm-offset-2 col-sm-12">
+					<ul id="event-list" class="event-list"></ul>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!--
 	<footer class="footer text-center">
 		<a href="https://medium.com/p/c2eab3fb0b2b">Inspirado neste post</a>
 		<br/>
@@ -56,9 +82,12 @@
 		<a class="" rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/">
 			<img alt="Licença Creative Commons" style="border-width:0" src="https://i.creativecommons.org/l/by-nc/4.0/80x15.png">
 	</a>
-	</footer>	
+	</footer>
+	-->
 	<script src="main.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
 
 	<script>
 		document.addEventListener('DOMContentLoaded', app.init);
