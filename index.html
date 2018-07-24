@@ -6,6 +6,7 @@
 	<title>Calendário de Eventos de Tecnologia</title>
 	<link rel="stylesheet" href="https://getbootstrap.com/docs/4.1/dist/css/bootstrap.min.css">
 	<link rel="stylesheet" href="styles.css">
+	<link rel="stylesheet" href="loader.css">
 	<meta name="description" content="Fique por dentro dos principais eventos de tecnologia do brasil e do mundo." />
     <meta name="keywords" content="Agilidade,Blockchain,CIO/Executivos,Cloud,Desenvolvimento,Ecommerce,Geral,IA,Inovacao,IOT,Lean,Lideranca,PMI,PMP,Robotica,Seguranca,UX,CX,PX">
 </head>
@@ -56,7 +57,7 @@
 		<button class="btn btn-outline-dark d-sm-none float-right mb-3" type="button" data-toggle="collapse" data-target="#collapseAside" aria-expanded="false" aria-controls="collapseAside">
 		    Filtrar <i class="fa fa-filter"></i>
 	  	</button>
-		<aside class="col-sm-3 float-left mb-4 d-sm-block" id="collapseAside" >
+		<aside class="col-sm-3 float-left mb-4 d-sm-block" id="collapseAside" style="display: none;">
 			<div class="card">
 				<article class="card-group-item">
 					<header class="card-header"><h6 class="title">Categorias</h6></header>
@@ -102,5 +103,6 @@
 
   gtag('config', 'UA-115849972-1');
 </script>
+<div class="loading" style="display: none"></div>
 </body>
 </html>

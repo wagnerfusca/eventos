@@ -146,6 +146,9 @@ h2{
 #category-list a span{
 	color: white;
 }
+.show{
+	display: block!important;
+}
 
 @media (min-width: 768px) {
 	.event-list > li {

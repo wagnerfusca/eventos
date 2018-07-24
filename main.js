@@ -42,6 +42,7 @@ const app = function () {
 	}
 
 	function _getJson () {
+			$('.loading').toggle();
 			fetch(_buildApiUrl(state.activeCategory))
 			.then((response) => response.json())
 			.then((json) => {
@@ -54,6 +55,7 @@ const app = function () {
 					_setQtyBadges(json.data);
 					state.initialized = true;
 				}
+				$('.loading').toggle();
 			})
 			.catch((error) => {
 				_setNotice('Unexpected error loading events');
@@ -231,6 +233,7 @@ const app = function () {
 
 	
 	function _setActiveCategory (category) {
+		$('#collapseAside').removeClass('show');
 		state.activeCategory = category;
 		
 		const label = category === null ? 'Todos' : category;
