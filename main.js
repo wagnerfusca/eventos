@@ -1,50 +1,48 @@
 const app = function () {
 	const API_BASE = 'https://script.google.com/macros/s/AKfycbzfcFWq9-9MZmDeZKdFa0dEg9a7JEV0PJ-NR7xboZtRRtr9FUM/exec';
 	const API_KEY = 'eventosfusca';
-	const CATEGORIES = {'Sem Filtro':'Sem Filtro','Agilidade': 'Agilidade', 'Blockchain': 'Blockchain', 'CIO/Executivos': 'CIO/Executivos', 'Cloud': 'Cloud', 'Desenvolvimento':'Desenvolvimento', 'Ecommerce':'Ecommerce', 'Geral':'Geral', 'IA-Inteligencia_Cognitiva': 'IA e Inteligência Cognitiva', 'Inovacao': 'Inovação', 'IOT':'IOT', 'Lean':'Lean', 'Lideranca':'Liderança', 'PMI-PMP':'PMI e PMP', 'Produtos': 'Produtos', 'RH': 'RH', 'Robotica':'Robótica', 'Seguranca':'Segurança', 'UX-CX-PX':'UX, CX e PX'};
+	const CATEGORIES = {
+		'Todos': {name: 'Todos', color: '#000'},
+		'Agilidade': {name: 'Agilidade', color: '#bfa719'},
+		'Blockchain': {name: 'Blockchain', color: '#18b1fc'},
+		'CIO/Executivos': {name: 'CIO/Executivos', color: '#3b987d'},
+		'Cloud': {name: 'Cloud', color: '#e34000'},
+		'Desenvolvimento': {name: 'Desenvolvimento', color: '#a14360'},
+		'Ecommerce': {name: 'Ecommerce', color: '#f49715'},
+		'Geral': {name: 'Geral', color: '#613176'},
+		'IA-Inteligencia_Cognitiva': {name: 'IA e Inteligência Cognitiva', color: '#0da58d'},
+		'Inovacao': {name: 'Inovação', color: '#d02a15'},
+		'IOT': {name: 'IOT', color: '#283ee0'},
+		'Lean': {name: 'Lean', color: '#8d73aa'},
+		'Lideranca': {name: 'Liderança', color: '#5a83de'},
+		'PMI-PMP': {name: 'PMI e PMP', color: '#6b14a4'},
+		'Produtos': {name: 'Produtos', color: '#02b820'},
+		'RH': {name: 'RH', color: '#e90f95'},
+		'Robotica': {name: 'Robótica', color: '#fc8d21'},
+		'Seguranca': {name: 'Segurança', color: '#7ec26b'},
+		'UX-CX-PX': {name: 'UX, CX e PX', color: '#5d7969'}
+	};
+	const MONTH_NAMES = ['JAN', 'FEV', 'MAR', 'ABR', 'MAI', 'JUN',
+	 	'JUL', 'AGO', 'SET', 'OUT', 'NOV', 'DEZ'
+	];
 
-	const state = {activeCategory: null};
+	const state = {activeCategory: null, initialized: false};
 	const page = {};
 	function init () {
 		page.notice = document.getElementById('notice');
-		page.filter = document.getElementById('filter');
+		page.filter = document.getElementById('category-list');
 		page.container = document.getElementById('container');
 		page.alert = document.getElementById('alert');
 		_buildFilter();
-		_getEvents();
-	}
-
-	function _setDataAtualizacao(cabecalho) {
-		page.alert.innerHTML = '<div class="alert alert-info" role="alert"> Atualizado em: <b>'+cabecalho[13]+'</b></div>';
-	}
-	function _getEvents () {
-		page.container.innerHTML = '';
-		const novaTabela = document.createElement('div');
-		novaTabela.innerHTML = `
-			<table class="table table-striped" id="tabela">
-			  <thead>
-				<tr>
-				  <th scope="col">Nome</th>
-				  <th scope="col">Categoria</th>
-				  <th scope="col">UF ou Pais</th>
-				  <th scope="col">Cidade</th>
-				  <th scope="col">Mes/ano</th>
-				  <th scope="col">Data Inicio</th>
-				  <th scope="col">Data Fim</th>
-				  <th scope="col">Call4Papers</th>
-				  <th scope="col">Site</th>
-				</tr>
-			  </thead>
-			  <tbody id="table-body">
-			  </tbody>
-			</table>
-			`   ;
-				
-		page.container.appendChild(novaTabela);
 		_getJson();
 	}
 
+	function _setDataAtualizacao(cabecalho) {
+		page.alert.innerHTML = '<div> Atualizado em: <b>'+cabecalho[13]+'</b></div>';
+	}
+
 	function _getJson () {
+			$('.loading').toggle();
 			fetch(_buildApiUrl(state.activeCategory))
 			.then((response) => response.json())
 			.then((json) => {
@@ -53,31 +51,62 @@ const app = function () {
 				}
 				_setDataAtualizacao(json.cabecalho)
 				_renderEvents(json.data);
+				if(!state.initialized){
+					_setQtyBadges(json.data);
+					state.initialized = true;
+				}
+				$('.loading').toggle();
 			})
 			.catch((error) => {
-				_setNotice('Unexpected error loading posts');
-				alert(error);
+				_setNotice('Unexpected error loading events');
 			})
 	}
 
+	function _setQtyBadges (events) {
+		var categories = [];
+		categories['Todos'] = events.length;
+		events.forEach(function(event){
+			const category = _getCategoryByName(event.categoria);
+			if(!categories[event.categoria])
+				categories[event.categoria] = 0;
+			if(
+				event.categoria === category.name ||
+				event.categoria === category.index
+			){
+
+				categories[event.categoria] += 1;
+			}
+		});
+
+		var filters = document.querySelectorAll('[data-category]');
+		filters.forEach(function(filterElement){
+			var cat = _getCategoryByName(filterElement.dataset.category);
+			filterElement.innerHTML += `
+				<span style="background-color: ${cat.color}" class="float-right badge round">
+				${categories[filterElement.dataset.category] || 0}
+				</span>
+			`;
+		});
+	}
 	function _buildFilter () {
 		for(var prop in CATEGORIES) {
-			page.filter.appendChild(_buildFilterLink(CATEGORIES[prop], prop, false));
+			page.filter.appendChild(_buildFilterLink(CATEGORIES[prop].name, prop, false));
 		}
 	}
 
 	function _buildFilterLink (element, key, isSelected) {
-		const link = document.createElement('button');
-		  link.innerHTML = _capitalize(element);
-		  link.classList = isSelected ? 'btn btn-primary hidden-xs' : 'btn btn-outline-primary hidden-xs';
-		  link.onclick = function (event) {
-			  let category = key === 'Sem Filtro' ? null : key.toLowerCase();
+		const categoryListElement = document.createElement('a');
+		  categoryListElement.innerHTML = _capitalize(element);
+		  categoryListElement.setAttribute('data-category', key);
+		  categoryListElement.href = '#';
+		  categoryListElement.classList = isSelected ? 'list-group-item active' : 'list-group-item';
+		  categoryListElement.onclick = function (event) {
+		  	let category = key === 'Todos' ? null : key.toLowerCase();
 
 			_setActiveCategory(category);
-			_getEvents();
+			_getJson();
 		  };
-
-		  return link;
+		  return categoryListElement;
 	}
 
 	function _buildApiUrl (category) {
@@ -91,23 +120,63 @@ const app = function () {
 		page.notice.innerHTML = label;
 	}
 
-	function _renderEvents (posts) {
-		posts.forEach(function (post) {
-			const linha = document.createElement('tr');
+	function _renderEvents (events) {
+		let eventListElement = document.getElementById('event-list');
+		eventListElement.innerHTML = '';
+		events.forEach(function (event) {
+			let linha = document.createElement('li');
+			const category = _getCategoryByName(event.categoria);
 			linha.innerHTML = `
-				  <th scope="row"> ${post.nome} </th>
-				  <td> ${post.categoria} </td>
-				  <td> ${post.uf} </td>
-				  <td> ${post.local} </td>
-				  <td> ${_formatDateMMYYYY(post.mesano)} </td>
-				  <td> ${_formatDateDDMMYYYY(post.inicio)} </td>
-				  <td> ${_formatDateDDMMYYYY(post.fim)} </td>
-				  <td> ${_formatString(post.call4papers)} </td>
-				  <td> <a href="${post.site}" target="_blank">${_formatLink(post.site)}</a> </td>
-					  
-			`;	
-			document.getElementById('table-body').appendChild(linha);
+				${_renderTime(event)}
+				<div class="info">
+					<div class="category" style="background-color: ${category.color}">${category.name}</div>
+					
+					<div class="row">
+						<div class="col-sm-10">
+							<h2 class="title">${event.nome}</h2>
+						</div>
+					</div>
+					<div class="d-flex">
+						<div class="col-xs-12 col-sm-6">
+							<div class="row">
+								<div class="col-sm-3 font-weight-bold">Início:</div>
+								<div class="col-sm-9">${_formatDateDDMMYYYY(event.inicio)}</div>
+							</div>
+							<div class="row">
+								<div class="col-sm-3 font-weight-bold">Fim:</div>
+								<div class="col-sm-9">${_formatDateDDMMYYYY(event.fim)}</div>
+							</div>
+							
+						</div>
+						<div class="col-xs-12 col-sm-6">
+							<div class="row">
+								<div class="col-sm-3 font-weight-bold">Local:</div>
+								<div class="col-sm-9">${event.local} - ${event.uf}</div>
+							</div>
+							<div class="row">
+								<div class="col-sm-3 font-weight-bold">Call4Papers:</div>
+								<div class="col-sm-9">${_formatString(event.call4papers)}</div>
+							</div>
+						</div>
+					</div>
+					<div class="links mt-3">
+						<a href="${event.site}" target="_blank">
+							<span>Site do Evento</span>
+							<i class="fa fa-arrow-circle-right"></i>
+						</a>
+					</div>
+				</div>`;
+			eventListElement.appendChild(linha);
 		});
+	}
+
+	function _getCategoryByName (category) {
+		const categoryIndex = Object.keys(CATEGORIES).filter(function(index){
+			return CATEGORIES[index].name === category 
+					|| index === category;
+		});
+		CATEGORIES[categoryIndex].index = categoryIndex[0];
+		return CATEGORIES[categoryIndex];
 	}
 
 	function _formatString (string) {
@@ -121,6 +190,26 @@ const app = function () {
 			return '';
 		}
 		return 'Acesse o site';
+	}
+	function _renderTime (event) {
+		var date = new Date(event.inicio);
+		const category = _getCategoryByName(event.categoria);
+		if(event.inicio){
+			return `
+				<time datetime="${_formatDateDDMMYYYY(event.inicio)}" style="background-color: ${category.color}">
+					<span class="day">${date.getDate()}</span>
+					<span class="month">${ MONTH_NAMES[date.getMonth()] }</span>
+					<span class="year">${ date.getFullYear() }</span>
+				</time>
+			`;
+		}
+		var date = new Date(event.mesano);
+		return `
+			<time datetime="${_formatDateDDMMYYYY(event.mesano)}" style="background-color: ${category.color}"">
+				<span class="month">${ MONTH_NAMES[date.getMonth()] }</span>
+				<span class="year">${ date.getFullYear() }</span>
+			</time>
+		`;
 	}
 
 	function _formatDateMMYYYY (string) {
@@ -144,12 +233,13 @@ const app = function () {
 
 	
 	function _setActiveCategory (category) {
+		$('#collapseAside').removeClass('show');
 		state.activeCategory = category;
 		
-		const label = category === null ? 'Sem Filtro' : category;
+		const label = category === null ? 'Todos' : category;
 		Array.from(page.filter.children).forEach(function (element) {
-			  element.classList = label === element.innerHTML.toLowerCase() ? 'btn btn-primary hidden-xs' : 'btn btn-outline-primary hidden-xs';
-		  });
+			element.classList = label === element.innerHTML.toLowerCase() ? 'list-group-item active' : 'list-group-item';
+	  	});
 	}
 
 	return {
