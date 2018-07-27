@@ -20,6 +20,7 @@ const app = function () {
 		'RH': {name: 'RH', color: '#e90f95'},
 		'Robotica': {name: 'Robótica', color: '#fc8d21'},
 		'Seguranca': {name: 'Segurança', color: '#7ec26b'},
+		'Testes': {name: 'Testes', color: '#D7DF01'},
 		'UX-CX-PX': {name: 'UX, CX e PX', color: '#5d7969'}
 	};
 	const MONTH_NAMES = ['JAN', 'FEV', 'MAR', 'ABR', 'MAI', 'JUN',
