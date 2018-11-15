@@ -1,6 +1,7 @@
 const app = function () {
 	const API_BASE = 'https://script.google.com/macros/s/AKfycbzfcFWq9-9MZmDeZKdFa0dEg9a7JEV0PJ-NR7xboZtRRtr9FUM/exec';
 	const API_KEY = 'eventosfusca';
+	const YEAR_FILTER_LENGHT = 3;
 	const CATEGORIES = {
 		'Todos': {name: 'Todos', color: '#000'},
 		'Agilidade': {name: 'Agilidade', color: '#bfa719'},
@@ -35,6 +36,7 @@ const app = function () {
 		page.container = document.getElementById('container');
 		page.alert = document.getElementById('alert');
 		_buildFilter();
+		_buildDateFilters();
 		_getJson();
 	}
 
@@ -50,7 +52,9 @@ const app = function () {
 				if (json.status !== 'success') {
 					_setNotice(json.message);
 				}
-				_setDataAtualizacao(json.cabecalho)
+				_setDataAtualizacao(json.cabecalho);
+				_initDateFilters();
+				localStorage.setItem('eventos', JSON.stringify(json));
 				_renderEvents(json.data);
 				if(!state.initialized){
 					_setQtyBadges(json.data);
@@ -61,6 +65,44 @@ const app = function () {
 			.catch((error) => {
 				_setNotice('Unexpected error loading events');
 			})
+	}
+
+	function _initDateFilters() {
+		document.getElementById("month-select").selectedIndex = 0;
+		
+		yearSelect = document.getElementById("year-select");
+		yearSelect.selectedIndex = 0;
+		
+	}
+
+	function _buildDateFilters () {
+		monthSelect = document.getElementById("month-select");
+		yearSelect = document.getElementById("year-select");
+
+		if (yearSelect.length = 1)
+		{
+			for (i = 0; i < YEAR_FILTER_LENGHT; i++)
+			{
+				var opt = document.createElement('option');
+				opt.value = opt.innerHTML = new Date().getFullYear() + i;
+				yearSelect.appendChild(opt);
+			}
+		}
+
+		monthSelect.onchange = yearSelect.onchange = function () {
+			_filterDate(monthSelect.value, yearSelect.value);
+		};
+	}
+
+	function _filterDate(month, year) {
+		let eventos = JSON.parse(localStorage.getItem('eventos'));
+		eventos.data = eventos.data.filter(function (evento){
+												if (month == 0 && year == 0) return evento;
+												if (year == 0) return new Date(evento.inicio).getMonth() == month -1;
+												if (month == 0) return new Date(evento.inicio).getFullYear() == year;
+												return new Date(evento.inicio).getFullYear() == year && new Date(evento.inicio).getMonth() == month -1;
+											});
+		_renderEvents(eventos.data);
 	}
 
 	function _setQtyBadges (events) {
@@ -121,10 +163,10 @@ const app = function () {
 		page.notice.innerHTML = label;
 	}
 
-	function _renderEvents (events) {
+	function _renderEvents (eventsData) {
 		let eventListElement = document.getElementById('event-list');
 		eventListElement.innerHTML = '';
-		events.forEach(function (event) {
+		eventsData.forEach(function (event) {
 			let linha = document.createElement('li');
 			const category = _getCategoryByName(event.categoria);
 			linha.innerHTML = `
