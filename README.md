@@ -25,7 +25,7 @@ Confira as necessidades iniciais mapeadas em [Issues](https://github.com/wagnerf
 
 
 ## Autor
-* **Wagner Fusca** - [Linkedin](https://www.linkedin.com/in/wagnerfusca/) - [Twitter](https://www.twitter.com/tiofusca)
+* **Wagner Fusca** - [Linkedin](https://www.linkedin.com/in/wagnerfusca/) - [Twitter](https://www.twitter.com/wagnerfusca_)
 
 ## Contribuição
 * [Agilidade.org](https://agilidade.slack.com/)
