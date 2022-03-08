@@ -29,6 +29,8 @@ const app = function () {
 	 	'JUL', 'AGO', 'SET', 'OUT', 'NOV', 'DEZ'
 	];
 
+	var novosDetalhesDoEvento = '';
+
 	const state = {activeCategory: null, initialized: false};
 	const page = {};
 	function init () {
@@ -164,12 +166,22 @@ const app = function () {
 		page.notice.innerHTML = label;
 	}
 
+
+	function _setNovosDetalhesDoEvento(label){
+			novosDetalhesDoEvento = '';
+			if (label == 'NEW') {
+				novosDetalhesDoEvento = '<img src = "new.png"/> </h2>';
+			}
+	}
+
 	function _renderEvents (eventsData) {
 		let eventListElement = document.getElementById('event-list');
 		eventListElement.innerHTML = '';
 		eventsData.forEach(function (event) {
 			let linha = document.createElement('li');
 			const category = _getCategoryByName(event.categoria);
+			_setNovosDetalhesDoEvento(event.novo);
+
 			linha.innerHTML = `
 				${_renderTime(event)}
 				<div class="info">
@@ -177,7 +189,8 @@ const app = function () {
 					
 					<div class="row">
 						<div class="col-sm-10">
-							<h2 class="title">${event.nome}</h2>
+							<h2 class="title">${event.nome} ${novosDetalhesDoEvento}
+
 						</div>
 					</div>
 					<div class="d-flex">
