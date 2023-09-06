@@ -170,7 +170,7 @@ const app = function () {
 	function _setNovosDetalhesDoEvento(label){
 			novosDetalhesDoEvento = '';
 			if (label == 'NEW') {
-				novosDetalhesDoEvento = '<img src = "new.png"/> </h2>';
+				novosDetalhesDoEvento = '<img src = "img/new.png"/> </h2>';
 			}
 	}
 
