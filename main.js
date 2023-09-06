@@ -5,25 +5,16 @@ const app = function () {
 	const CATEGORIES = {
 		'Todos': {name: 'Todos', color: '#000'},
 		'Agilidade': {name: 'Agilidade', color: '#bfa719'},
-		'Blockchain': {name: 'Blockchain', color: '#18b1fc'},
 		'CIO/Executivos': {name: 'CIO/Executivos', color: '#3b987d'},
-		'Cloud': {name: 'Cloud', color: '#e34000'},
 		'Desenvolvimento': {name: 'Desenvolvimento', color: '#a14360'},
-		'Ecommerce': {name: 'Ecommerce', color: '#f49715'},
 		'Geral': {name: 'Geral', color: '#613176'},
 		'Hackathon': {name: 'Hackathon', color: '#8B4513'}, 
-		'Inovacao': {name: 'Inovação', color: '#d02a15'},
-		'IA-Inteligencia_Cognitiva': {name: 'IA e Inteligência Cognitiva', color: '#0da58d'},
-		'IOT': {name: 'IOT', color: '#283ee0'},
-		'Lean': {name: 'Lean', color: '#8d73aa'},
-		'Lideranca': {name: 'Liderança', color: '#5a83de'},
-		'PMI-PMP': {name: 'PMI e PMP', color: '#6b14a4'},
+		'Inovação': {name: 'Inovação', color: '#d02a15'},
+		'Liderança': {name: 'Liderança', color: '#5a83de'},
 		'Produtos': {name: 'Produtos', color: '#02b820'},
 		'RH': {name: 'RH', color: '#e90f95'},
-		'Robotica': {name: 'Robótica', color: '#fc8d21'},
-		'Seguranca': {name: 'Segurança', color: '#7ec26b'},
+		'Segurança': {name: 'Segurança', color: '#7ec26b'},
 		'Testes': {name: 'Testes', color: '#D7DF01'},
-		'UX-CX-PX': {name: 'UX, CX e PX', color: '#5d7969'}
 	};
 	const MONTH_NAMES = ['JAN', 'FEV', 'MAR', 'ABR', 'MAI', 'JUN',
 	 	'JUL', 'AGO', 'SET', 'OUT', 'NOV', 'DEZ'
