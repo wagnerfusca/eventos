@@ -185,7 +185,7 @@ const app = function () {
 						</div>
 					</div>
 					<div class="d-flex">
-						<div class="col-xs-12 col-sm-6">
+						<div class="col-xs-12 col-sm-4">
 							<div class="row">
 								<div class="col-sm-3 font-weight-bold">Início:</div>
 								<div class="col-sm-9">${_formatDateDDMMYYYY(event.inicio)}</div>
@@ -194,25 +194,42 @@ const app = function () {
 								<div class="col-sm-3 font-weight-bold">Fim:</div>
 								<div class="col-sm-9">${_formatDateDDMMYYYY(event.fim)}</div>
 							</div>
-							
-						</div>
-						<div class="col-xs-12 col-sm-6">
 							<div class="row">
 								<div class="col-sm-3 font-weight-bold">Local:</div>
 								<div class="col-sm-9">${event.local} - ${event.uf}</div>
 							</div>
+						</div>
+						<div class="col-xs-12 col-sm-5">
 							<div class="row">
 								<div class="col-sm-3 font-weight-bold">Call4Papers:</div>
 								<div class="col-sm-9">${_formatString(event.call4papers)}</div>
 							</div>
 						</div>
-					</div>
+						<div class="col-xs-12 col-sm-3">	
+							<div class="row">
+							<!-- Button code -->
+								<div class="col">
+									<div title="addCalendar" class="addeventatc" data-render="inline-buttons">
+										<span class="start">${event.inicio}</span>
+										<span class="end">${event.fim}</span>
+										<span class="timezone">America/Sao_Paulo</span>
+										<span class="title">${event.nome}</span>
+										<span class="date_format">DD/MM/YYYY</span>
+										<span class="location">${event.local} - ${event.uf}</span>
+										<span class="description">${event.call4papers}</span>
+									</div>
+								</div>
+							</div>	
+						</div>	
+						
+					</div>	
 					<div class="links mt-3">
 						<a href="${event.site}" target="_blank">
 							<span>Site do Evento</span>
 							<i class="fa fa-arrow-circle-right"></i>
 						</a>
 					</div>
+					
 				</div>`;
 			eventListElement.appendChild(linha);
 		});
